@@ -4,7 +4,7 @@
 
 - Gitbook 访问地址(会自动发布)：https://terark.gitbooks.io/terarkdb-manual/content/
 - Terark 官网访问地址（会自动发布）：https://terark.com/docs/terarkdb-manual/
-  - 因为 push 后会触发编译发布逻辑，请不要频繁的 push 代码
+- 因为 push 后会触发编译发布逻辑，请不要频繁的 push 代码
 
 
 ## 目录结构说明
