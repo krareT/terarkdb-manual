@@ -1,0 +1,25 @@
+{
+    "author": "royguo@terark.com",
+    "links": {
+        "sidebar": {
+            "官方网站": "https://www.terark.com"
+        }
+    },
+    "plugins" : 
+    [
+        "advanced-emoji",
+        "disqus",
+        "todo",
+        "emphasize",
+        "katex",
+        "mermaid-compat",
+        "chart",
+        "search-pro",
+        "-search",
+        "toc"
+    ],
+    "styles":
+    {
+      "website": "styles/website.css"
+    }
+}
