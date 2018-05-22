@@ -33,29 +33,28 @@ Level compaction 写放大更为严重，会导致更低的写入速度以及更
 ## TerarkDB 随机读更快，并且压缩率也更高，那么损失的是什么？
 我们的压缩速度更慢，并且在压缩过程中需要占用更多的内存. 当然，这并不会阻塞实时写入（异步压缩），单线程的写入，在普通的服务器上一般可以达到 15～50M/s, 多线程压缩的时候，速度可以满足据大多数场景使用
 
-## 锁机制是什么养的？当压缩的时候，TerarkDB 会锁住整个表么？
+## 锁机制是什么样的？当压缩的时候，TerarkDB 会锁住整个表么？
 TerarkDB 在压缩过程中并没有使用锁，如同 RocksDB 一样，SSTable 在压缩后就变成只读的，在压缩过程中是只写的，我们并没有对此部分逻辑进行修改
 
-## 当一个巨大的 SSTable 需要压缩的时候，会出现射门问题(e.g. 5TB 大的一个)
+## 当一个巨大的 SSTable 需要压缩的时候，会出现什么问题(e.g. 5TB 大的一个)
 一般不会出现如此大的 SSTable，当然 TerarkDB 支持这么大的 SSTable，但是这并没有必要，一般情况下几百 GB 是足够的
 
 
 ## 单个 SSTable 的最大尺寸能有多大？
-It depends, usually the max number of keys in an SSTable can not exceed 1.5 billions, and the total length of all keys can be much larger(practically 30GB should be safe).
+视情况而有所不同，通常一个 SSTable 中的 KEY 不能超过 15 亿个，并且 KEY 的总长度可以很大（比如 30GB 是很安全的）
 
-For values, the total length of compressed values can not exceeds 128PB(practically this limit will never be hit), the number of values is the same as the number of keys.
+对于 Value 而言, 压缩后的总数据不能超过 128PB（实践中几乎不会出现），VALUE 的数量限制和 KEY 相同。
 
-People will unlikely to generate such large single SSTable and hit the limit, and TerarkDB will finish such large SSTable and create a new SSTable.
 
 ## 随机和顺序读的速度如何?
-It depends on the data set and memory limit.
+取决于数据集的大小和内存限制。
 
-On TPC-H lineitem data with unlimited memory (row len 615 bytes, key len 23 bytes, text field length 512 bytes), for a SINGLE thread:
+在 TPC-H lineitem 数据集上且不限制内存（每行 615 字节，KEY 23 字节，文本 512 字节），单线程：
 
-- For key, ~10MB/s on Xeon 2630 v3, up to ~80MB/s on a different data set.
-- For value, ~500 MB/s on Xeon 2630 v3, up to ~7GB/s on a different data set.
+- 对于 key, 大约 ~10MB/s, 在其他数据集上最高 ~80MB/s（Xeon 2630 v3）.
+- 对于 value, 大约 ~500 MB/s, 在其他数据集上最高 ~7GB/s （Xeon 2630 v3）.
 
-As a general rule, below showing the relative comparable magnitudes of read speed:
+下表是一个相对的读速度对比：
 - When Memory is <strong>slightly</strong> limited(all data fit in memory by TerarkDB, not by Other DBs)
 <table>
 <tr>
