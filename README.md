@@ -3,7 +3,7 @@
 该仓库是用来生成 gitbook 文档用的，请严格按照以下说明来添加资料
 
 - Gitbook 访问地址(会自动发布)：https://terark.gitbooks.io/terarkdb-manual/content/
-- Terark 官网访问地址（会自动发布）：https://terark.com/docs/terarkdb-manual/
+- Terark 官网访问地址（会自动发布）：http://terark.com/docs/terarkdb-manual/
 - 因为 push 后会触发编译发布逻辑，请不要频繁的 push 代码
 
 
