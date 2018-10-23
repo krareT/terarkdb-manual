@@ -4,15 +4,15 @@ We are continuously providing benchmark results, here are some of them:
 
 ## 1. TerarkDB Benchmark
 
-- [[Benchmark TPCH Overview]]
-- [[Benchmark Amazon Movies]]
-- [[Benchmark by db_bench]]
+- [Benchmark TPCH Overview](Benchmark-TPCH-Overview.html)
+- [Benchmark Amazon Movies](Benchmark-Amazon-Movies.html)
+- [Benchmark by db_bench](Benchmark-by-db_bench.html)
 
 ## 2. TerarkDB vs. RocksDB
 We have benchmarked TerarkDB and RocksDB with two different servers:
 
-- [[Benchmark TPCH TerarkDB vs RocksDB A]]
-- [[Benchmark TPCH TerarkDB vs RocksDB B]]
+- [Benchmark TPCH TerarkDB vs RocksDB A](Benchmark-TPCH-TerarkDB-vs-RocksDB-A.html)
+- [Benchmark TPCH TerarkDB vs RocksDB B](Benchmark-TPCH-TerarkDB-vs-RocksDB-B.html)
 
 |   | Server A               | Server B                   |
 |---|------------------------|----------------------------|

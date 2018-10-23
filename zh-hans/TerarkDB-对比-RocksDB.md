@@ -1,4 +1,4 @@
-[[English|TerarkDB vs RocksDB]]
+[English](TerarkDB-vs-RocksDB.html)
 ## 简单概括
 1. API 接口兼容 RocksDB
 1. 随机读更快
@@ -21,11 +21,11 @@
 是一种全局压缩技术，用来压缩 Value 集合，可以直接在压缩的数据上根据整数 ID 定点提取单条 Value
 
 ## Patricia Trie MemTable
-基于 Copy On Write 的 [[Dynamic Patricia Trie]]，典型场景下，算法级裸性能提高 5 倍，内存用量降低 3 倍(相同 MemTable 尺寸可装入 3 倍数据)。集成进 RocksDB后（性能倍被 RocksDB 框架拉低），总体性能提高约 40%。
+基于 Copy On Write 的 [Dynamic Patricia Trie](Dynamic-Patricia-Trie.html)，典型场景下，算法级裸性能提高 5 倍，内存用量降低 3 倍(相同 MemTable 尺寸可装入 3 倍数据)。集成进 RocksDB后（性能倍被 RocksDB 框架拉低），总体性能提高约 40%。
 
 Patricia Trie MemTable 可以直接 Dump 文件，从而 MemTable Flush 的性能获得大幅提升。
 
-[[MemTable 的这些改进 | 重新实现 RocksDB MemTable]]，需要同时修改 RocksDB 自身，相关 Pull Request: [PR ####]()。
+[MemTable 的这些改进](重新实现-RocksDB-MemTable.html)，需要同时修改 RocksDB 自身，相关 Pull Request: [PR ####]()。
 
 ## 参数调整及优化
 1. 使用 universal compaction，减小写放大

@@ -1,9 +1,9 @@
-[[English|CompositeUintIndex English]]
+[English](CompositeUintIndex-English.html)
 
-在**特殊的** CO-Index 中，除了 [[UintIndex]]，还有 `CompositeUintIndex`：
+在**特殊的** CO-Index 中，除了 [UintIndex](UintIndex.html)，还有 `CompositeUintIndex`：
 
 ## 仍以 MySQL 为例
-还是 [[UintIndex]] 中的那个表：
+还是 [UintIndex](UintIndex.html) 中的那个表：
 ```mysql
 CREATE TABLE Student(
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -21,7 +21,7 @@ KeyValue 中的 `Value` 就直接为空。
 
 ### 当索引是 unique 索引时
 此时 `SecondaryKey` 和 `PrimaryKey` 是一对一的，这个索引可以看成是一个 `StaticSortedMap<SecondaryKey, PrimaryKey>`。这个优化实现就非常简单了: 
-* 以 [[UintIndex]] 的方式对待 SecondaryKey
+* 以 [UintIndex](UintIndex.html) 的方式对待 SecondaryKey
 * 后面的 `PrimaryKey`，直接以数组的形式保存，我们只考虑 PrimaryKey 为定长的情况
   * PrimaryKey 为变长(例如String)时，占用空间可能会过多，此时将整个 `SecondaryKey + PrimaryKey` 使用 Nested Succinct Trie 表达会更合算
   * PrimaryKey 为变长(例如String)的情况比较罕见
@@ -29,7 +29,7 @@ KeyValue 中的 `Value` 就直接为空。
 ### 当索引非唯一时
 此时同一个 `SecondaryKey` 可能会对应多个 `PrimaryKey`，这个索引就可以看成是一个 `StaticSortedMap<SecondaryKey, Group<PrimaryKey> >` ，同样，我们只考虑 PrimaryKey 为定长的情况。
 
-当习惯了 Rank-Select 思维方式时，很自然的，我们仍以 [[UintIndex]] 的方式对待 SecondaryKey，对后面的 `Group<PrimaryKey>`，则使用 `Rank-Select + 数组` 的形式保存：
+当习惯了 Rank-Select 思维方式时，很自然的，我们仍以 [UintIndex](UintIndex.html) 的方式对待 SecondaryKey，对后面的 `Group<PrimaryKey>`，则使用 `Rank-Select + 数组` 的形式保存：
 * 把所有的 PrimaryKey 平铺开来，放到一个巨大的数组
 * 在 Rank-Select 的 BitMap 中，为每个 `Group<PrimaryKey>` 添加起始标识和长度
   * 每个 Group 以 0 开始，Group 中有多少个 PrimaryKey，就再紧接着添加多少个 1
@@ -50,7 +50,7 @@ KeyValue 中的 `Value` 就直接为空。
 template<class RankSelect1, class RankSelect2>
 class CompositeUintIndex {...};
 ```
-`RankSelect1` 对应于 [[UintIndex]] 中的 RankSelect，RankSelect2 用来表达 `Group<PrimaryKey>`。同理，根据 0 和 1 的相对数量，RankSelect2 可以是：
+`RankSelect1` 对应于 [UintIndex](UintIndex.html) 中的 RankSelect，RankSelect2 用来表达 `Group<PrimaryKey>`。同理，根据 0 和 1 的相对数量，RankSelect2 可以是：
 * RankSelectBitMap
 * RankSelectAllZero
 * RankSelectFewOne
@@ -59,7 +59,7 @@ class CompositeUintIndex {...};
 在这个设计中，我们不用区分 Unique Index 和 Non Unique Index，当 RankSelect2 是 AllZero 时，它就是 Unique Index。恰好，MyRocks 的
  Index 结构中，也没有区分 Unique Index 和 Non Unique Index……
 ## 推广到 MongoDB
-我们将 [[UintIndex]] 中 MongoDB 的 Index 简介 Copy 过来：
+我们将 [UintIndex](UintIndex.html) 中 MongoDB 的 Index 简介 Copy 过来：
 
 MongoDB 有两大类 Key Value 数据，RecordStore（即 Collection） 和 Index：
 
@@ -69,7 +69,7 @@ MongoDB 有两大类 Key Value 数据，RecordStore（即 Collection） 和 Inde
 |UniqueIndex|IndexKey|RecordID uint64|
 |StandardIndex|IndexKey + RecordID uint64|*Empty*|
 
-这样，MongoDB 的 `RecordStore` 可以使用 [[UintIndex]]，`UniqueIndex` 和 `StandardIndex` 则可以使用 `CompositeUintIndex`。
+这样，MongoDB 的 `RecordStore` 可以使用 [UintIndex](UintIndex.html)，`UniqueIndex` 和 `StandardIndex` 则可以使用 `CompositeUintIndex`。
 
 以最常用的 `_id` 索引为例，`_id` 是 `UniqueIndex`，通常是 `ObjectId` 类型：
 <table><tbody align="center">

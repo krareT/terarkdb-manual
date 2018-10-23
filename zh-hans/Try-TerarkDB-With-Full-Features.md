@@ -1,4 +1,4 @@
-[[中文 | 完整功能]]
+[中文](完整功能.html)
 
 # Try TerarkDB With Full Features
 Now you have compiled terark rocksdb and downloaded terark-zip-rocksdb, if not, see [here...](Home)
@@ -9,7 +9,7 @@ Now you have compiled terark rocksdb and downloaded terark-zip-rocksdb, if not, 
 - People who need more granular control on `SSTable` (Requires code changes in your application).
 - People who want to know more details about `TerarkZipTable` (Our implementation of `SSTable`).
 
-**NOTE:** If you just want to experience `TerarkDB` without code changes of your application, please refer to [[Quick Start | Try TerarkDB With Minimal Effort]]
+**NOTE:** If you just want to experience `TerarkDB` without code changes of your application, please refer to [Quick Start](Try-TerarkDB-With-Minimal-Effort.html)
 
 ## 3. RocksDB utility tools for TerarkDB
 

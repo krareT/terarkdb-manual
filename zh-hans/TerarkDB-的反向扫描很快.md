@@ -41,4 +41,4 @@ ORDER BY timestamp DESC LIMIT 10;
 ## TerarkDB 天生对逆向扫描与正向扫描一视同仁
 如果 TerarkDB 的正向扫描比传统 DB 的正向扫描快 1 倍，那么逆向扫描就至少快 10 倍。
 
-从而，对于 TerarkDB，`Reverse Index` 是个负优化，主要是加重了 TerarkDB 实现的复杂性：比如在 RocksDB 中，为了支持 Reverse Column Family，我们做了很多[[额外的事情 | Key Comparator ]]。
+从而，对于 TerarkDB，`Reverse Index` 是个负优化，主要是加重了 TerarkDB 实现的复杂性：比如在 RocksDB 中，为了支持 Reverse Column Family，我们做了很多[额外的事情](Key-Comparator.html)。

@@ -1,6 +1,6 @@
 # **This solution was discarded because we have a more elegant solution.**
 
-[[中文版 | 读取 Value 数据的一部分]]
+[中文版](读取-Value-数据的一部分.html)
 
 ## Preface
 We are planed to implement a fuse filesystem by rocksdb, this filesystem is optimized for large number of small files.

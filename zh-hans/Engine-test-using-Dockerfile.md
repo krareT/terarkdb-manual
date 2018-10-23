@@ -1,4 +1,4 @@
-[[中文 Chinese| 使用-Dockerfile-进行存储引擎测试]]
+[中文 Chinese](使用-Dockerfile-进行存储引擎测试.html)
 
 **1. Using `Dockerfile` to build a test environemnt, place the Dockerfile below into any directory, e.g. `terarkdb-tests/Dockerfile`:**
 

@@ -1,4 +1,4 @@
-[[中文 | 快速开始]]
+[中文](快速开始.html)
 
 # Try TerarkDB With Minimal Effort
 Now you have compiled `terark rocksdb` and downloaded `terark-zip-rocksdb`, if not, see [here...](Home)
@@ -122,4 +122,4 @@ We implemented a `SSTable` of RocksDB, and named it as `TerarkZipTable`. With th
 
 
 ## 5. More
-`TerarkZipTable` actually provides more granular control on TerarkDB. If you want to know more about it, you need code changes for configuring TerarkDB and re-compile your application, refer to [[Try TerarkDB With Full Features|Try TerarkDB With Full Features]].
+`TerarkZipTable` actually provides more granular control on TerarkDB. If you want to know more about it, you need code changes for configuring TerarkDB and re-compile your application, refer to [Try TerarkDB With Full Features](Try-TerarkDB-With-Full-Features.html).

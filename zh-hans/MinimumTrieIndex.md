@@ -4,7 +4,7 @@ Nested Succinct Trie 作为变长 Key 的索引，有优异的压缩率和随机
 
 ## 仍以 MySQL 为例
 
-还是 [[UintIndex]] 中的那个表：
+还是 [UintIndex](UintIndex.html) 中的那个表：
 ```mysql
 CREATE TABLE Student(
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -34,7 +34,7 @@ SST Builder 并不知道索引的 Schema，在把 `PrefixID` 剔除之后，剩�
   * 这种情况很可能前缀就是 Secondary Key，后缀就是 Primary Key，并且 Secondary Key 是 Unique 的
 * 如果直方图表明大部分`后缀`都是固定长度（例如 4 字节），但仍有少部分（例如 5%）后缀的长度较短（例如少于 4 字节）
   * 此时直接将后缀存储为元素长度为大于最小长度的某个值（例如 4 字节）
-  * 此时就存在一个前缀对应多个后缀的情况，可以用 Rank Select 来进行解决，使用类似 [[CompositeUintIndex]] 的方式
+  * 此时就存在一个前缀对应多个后缀的情况，可以用 Rank Select 来进行解决，使用类似 [CompositeUintIndex](CompositeUintIndex.html) 的方式
     * 这种情况下，Reorder 会更复杂一些
   * 使用了 Rank Select，前缀唯一（无重复）的情况就可以通过 `RankSelectAllZero` 来实现，作为一种特殊解
 

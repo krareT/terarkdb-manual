@@ -1,4 +1,4 @@
-[[English|Overcome Universal Compaction Space Amplification]]
+[English](Overcome-Universal-Compaction-Space-Amplification.html)
 ## Compaction 策略
 RocksDB 默认的 Compact 策略是 Level Compaction，Level Compaction 在大多数情况下工作得很好，但是面对高压力的随机写，就有点扛不住了。此时如果使用 Universal Compaction，可以大大改善性能。
 

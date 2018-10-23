@@ -6,7 +6,7 @@ RocksDB(来源于LevelDB) 的 Comparator，和其它的 Comparator 并没有什�
 RocksDB 自身默认的 Comparator 就是“**按字节的字典序**”，名字是 `leveldb.BytewiseComparator`，只要我们看到这个名字，我们就知道，不管它是怎么实现的，它的行为一定是“**按字节的字典序**”。
 
 ## Terark
-不管是 [[Terark MemTable | 重新实现 RocksDB MemTable]]，还是 [[Terark SST | TerarkDB SST 的创建过程]]，Key 的排列顺序都是且必须是“**按字节的字典序**”。我们只需要判断 Comparator 的 `Name`，就知道接下来应该使用 Terark 的 MemTable/SST，还是应该 fallback 到 RocksDB 自身的 MemTable/SST。
+不管是 [Terark MemTable](重新实现-RocksDB-MemTable.html)，还是 [Terark SST](TerarkDB-SST-的创建过程.html)，Key 的排列顺序都是且必须是“**按字节的字典序**”。我们只需要判断 Comparator 的 `Name`，就知道接下来应该使用 Terark 的 MemTable/SST，还是应该 fallback 到 RocksDB 自身的 MemTable/SST。
 
 表面上看，这限制了**灵活性**，但实际上，这种依赖于 Comparator 的灵活性，在绝大多数时候都是不必要的，因为我们总是可以使用其它手段来实现这种灵活性，比如通过对 Key 进行编码，让编码后的顺序是字节序，且这个顺序等价于编码前按 Comparator 的顺序：
 

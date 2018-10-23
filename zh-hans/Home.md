@@ -1,4 +1,4 @@
-[[中文 Chinese|首页]]
+[中文 Chinese](首页.html)
 
 # TerarkDB Documentation
 
@@ -19,7 +19,7 @@ Now by using `TerarkDB`, you are able to store more data on disk (3x+ more than 
 
 ## Notes
 - Without `terark-zip-rocksdb`, [terark rocksdb](https://github.com/Terark/rocksdb) works same as [official rocksdb](https://github.com/facebook/rocksdb)
-- With `terark-zip-rocksdb`, you need [[a little config | Try TerarkDB With Minimal Effort]] to enable terark technology
+- With `terark-zip-rocksdb`, you need [a little config](Try-TerarkDB-With-Minimal-Effort.html) to enable terark technology
 
 ## 1. Compile and Download
 ### 1.1 Compile <a href="https://github.com/terark/rocksdb">terark rocksdb</a> by yourself
@@ -68,16 +68,16 @@ The downloaded package contains all dependencies you need as below:
 ```
 
 ## 2. Now, you can try TerarkDB
-- [[Try TerarkDB With Minimal Effort]]
+- [Try TerarkDB With Minimal Effort](Try-TerarkDB-With-Minimal-Effort.html)
   - If you want to try TerarkDB the quickest way, do not need to re-compile your existing application.
-- [[Try TerarkDB With Full Features]]
+- [Try TerarkDB With Full Features](Try-TerarkDB-With-Full-Features.html)
   - If you want to try TerarkDB's full features (e.g. more granular control on TerarkDB), with a little change of your existing application code.
 
 ## 3. Restrictions
-- User [[Key Comparator]] is not supported, you should encode your keys in byte lexical order
+- User [Key Comparator](Key-Comparator.html) is not supported, you should encode your keys in byte lexical order
 - `EnvOptions::use_mmap_reads` must be `true`, can be set by `DBOptions::allow_mmap_reads`
 
-## 4. [[Tuning Guide]]
+## 4. [Tuning Guide](Tuning-Guide.html)
 
 ## 5. License
 This software is open source.
@@ -88,7 +88,7 @@ This software is open source.
 [License of submodule rocksdb](https://github.com/Terark/rocksdb/blob/master/LICENSE) is same as offical rocksdb(BSD clause 3).
 
 ### 5.2 submodule terark-zip-rocksdb
-[submodule terark-zip-rocksdb](https://github.com/Terark/terark-zip-rocksdb) implements an [[MemTable | 重新实现 RocksDB MemTable]] and an [[SSTable | TerarkDB SST building]] for [submodule rocksdb](https://github.com/Terark/rocksdb), [terark-zip-rocksdb license](https://github.com/Terark/terark-zip-rocksdb/blob/master/LICENSE) is Apache 2.0, with NOTES:
+[submodule terark-zip-rocksdb](https://github.com/Terark/terark-zip-rocksdb) implements an [MemTable](重新实现-RocksDB-MemTable.html) and an [SSTable](TerarkDB-SST-building.html) for [submodule rocksdb](https://github.com/Terark/rocksdb), [terark-zip-rocksdb license](https://github.com/Terark/terark-zip-rocksdb/blob/master/LICENSE) is Apache 2.0, with NOTES:
   * You can read or redistribute or use the source code under Apache 2.0 license
   * You can not compile this software by yourself, since this software depends on our proprietary core algorithms, which requires a commercial license
   * You can [download](http://www.terark.com/download/terarkdb/latest) the precompiled binary library of this software

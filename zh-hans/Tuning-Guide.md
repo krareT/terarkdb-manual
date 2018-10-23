@@ -1,4 +1,4 @@
-[[中文 Chinese|TerarkDB 参数调节]]
+[中文 Chinese](TerarkDB-参数调节.html)
 # TerarkDB Tuning Guide
 There are some best practices you should know about TerarkDB. We will add those information ASAP, meanwhile if you need help you can post an [issue](https://github.com/Terark/terarkdb/issues) in this repository.
 

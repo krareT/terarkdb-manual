@@ -1,4 +1,4 @@
-[[中文 Chinese|TerarkDB SST 的创建过程]]
+[中文 Chinese](TerarkDB-SST-的创建过程.html)
 ## Background
 We know, for a (Key, Value) store, in most cases, key length is much smaller than value length, and key index is required to search values by keys.
 
