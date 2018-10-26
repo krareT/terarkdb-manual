@@ -2,7 +2,6 @@
     "plugins" : 
     [
         "advanced-emoji",
-        "disqus",
         "todo",
         "emphasize",
         "katex",
@@ -13,12 +12,7 @@
     "pluginsConfig": 
     {
         "sharing": {
-            "weibo": true,
-            "facebook": true,
-            "twitter": true
-        },
-        "disqus": {
-            "shortName": "xxxxxx"
+            "weibo": true
         },
         "search-pro": {
             "cutWordLib": "nodejieba"

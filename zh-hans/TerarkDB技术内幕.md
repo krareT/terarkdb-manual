@@ -1,4 +1,3 @@
-[English](Inside-TerarkDB.html)
 # TerarkDB 技术内幕
 TerarkDB 实现了存储引擎的性能巅峰，这里面，倾注着我们不懈的努力……
 
@@ -101,10 +100,10 @@ Trie 可以用来实现 Index，下面这个 Succinct Trie 用的是 LOUDS 表�
 
 |||
 |--|--|
-|[UintIndex](UintIndex.html)Full|Key 是完整的整数范围，中间没有空洞|
+|[UintIndex](UintIndex.md)Full|Key 是完整的整数范围，中间没有空洞|
 |UintIndexFewHole|Key 是**非常密集**的整数范围，范围中只**缺失极少**的整数|
 |UintIndexBitMap |Key 是**比较密集**的整数范围，范围中有**缺失部分**的整数|
-|[CompositeUintIndex](CompositeUintIndex.html)AllZero|...|
+|[CompositeUintIndex](CompositeUintIndex.md)AllZero|...|
 |CompositeUintIndexBitMap|...|
 |CompositeUintIndexFewOne|...|
 
