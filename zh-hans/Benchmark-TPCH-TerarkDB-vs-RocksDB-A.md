@@ -1,6 +1,6 @@
-# TerarkDB vs. RocksDB on Server A
+# TerarkDB vs. RocksDB 案例一
 
-## 1. Test Dataset
+## 1. 测试数据集
 
 We use the lineitem table in TPC-H dataset, and set the length of comment text field in the dbgen lineitem to 512 (from 27). So the average row length of the lineitem table is 615 bytes, in which, the key is the combination of the first 3 fields printed into decimal string from integers.
 
@@ -9,8 +9,15 @@ The total size of the dataset is `554,539,419,806 bytes`, with `897,617,396 line
 TPC-H dbgen generates raw data of strings, which we use directly in our test, without any transformation on the data.
 
 
-## 2. Hardware
-|                                                                    | Server A                                  |
+我们在 TPC-H 数据集中使用 lineitem 表，并将 dbgen lineitem 中的 comment 文本字段的长度设置为 512（默认是 27 字节）。 因此，lineitem 表的平均行尺寸为 615 字节，其中，key 是前三个整数字段直接拼接而成的字符串。
+
+数据集的总大小为 `554,539,419,806 bytes`，`897,617,396 rows`。 key 的总尺寸是 `22,726,405,004 bytes`, 剩余的是 value 总尺寸。
+
+TPC-H dbgen 生成最原始的字符串数据，我们直接在测试中使用这些数据而不对数据进行任何转换。
+
+
+## 2. 硬件
+|                                                                    | 服务器配置                                  |
 |--------------------------------------------------------------------|-------------------------------------------|
 | CPU Number                                                         | 2                                         |
 | CPU Type                                                           | Xeon E5-2680 v3                           |
@@ -23,9 +30,9 @@ TPC-H dbgen generates raw data of strings, which we use directly in our test, wi
 | Memory                                                             | 64GB                                      |
 | Memory Freq.                                                       | DDR4 2133Hz                               |
 | SSD Capacity                                                       | 2TB x 1                                   |
-| SSD IOPS                                                           | 20000 <br/>(Network virtual SSD, not local SSD) |
+| SSD IOPS                                                           | 20000 <br/>(网络 SSD, 不是本地 SSD) |
 
-## 3. DB Parameters
+## 3. DB 参数
 
 |                                      | RocksDB                                                                                                                                                                                                                  | TerarkDB                              |
 |--------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
@@ -43,7 +50,8 @@ TPC-H dbgen generates raw data of strings, which we use directly in our test, wi
 | Target_file_size_base                | Default (64M)                                                                                                                                                                                                            | 1G                                    |
 | Target_file_size_multiplier          | 1 (SST size in RocksDB<br/> do not influence performance)                                                                                                                                                                     | 5                                     |
 
-For both of them, we disable all write speed limits:
+
+对于两种引擎，我们禁用了所有的写限速:
 
 - options.level0_slowdown_writes_trigger = 1000;
 - options.level0_stop_writes_trigger = 1000;
@@ -51,7 +59,7 @@ For both of them, we disable all write speed limits:
 - options.hard_pending_compaction_bytes_limit = 4ull<<40
 
 
-## 4. Benchmark Charts
+## 4. 测试结果
 ### 4.1. OPS Comparison
 #### 4.1.1. TerarkDB OPS
 ![](images/terarkdb_vs_rocksdb_server_a/terarkdb_ops.png)
@@ -76,7 +84,7 @@ For both of them, we disable all write speed limits:
 #### 4.4.2. RocksDB CPU Usage
 ![](images/terarkdb_vs_rocksdb_server_a/rocksdb_cpu.png)
 
-## 5. Benchmark Detail Explaination
+## 5. 测试结果说明
 
 <table>
 <tr>
@@ -86,78 +94,78 @@ For both of them, we disable all write speed limits:
 </tr>
 <tr>
   <td>0~2 minutes</td>
-  <td>Read OPS 1M <br/>Write OPS 140K <br/>(Memory is enough)</td>
-  <td>Read OPS 1.69M <br/>Write OPS 120K <br/>(Memory is enough)</td>
+  <td>Read OPS 1M <br/>写 OPS 140K <br/>(Memory is enough)</td>
+  <td>Read OPS 1.69M <br/>写 OPS 120K <br/>(Memory is enough)</td>
 </tr>
 
 <tr>
 <td>2~15 minutes</td>
-<td>Read OPS 690K <br/>Write OPS 90K <br/>(Compaction started, <br/>memory pressure increases, <br/>but still enough to use)</td>
-<td>Read OPS 850K <br/> Write OPS 80K <br/>(Memory is enough)</td>
+<td>Read OPS 690K <br/>写 OPS 90K <br/>(开始压缩, <br/>内存压力增大, <br/> 但仍然足够使用)</td>
+<td>Read OPS 850K <br/> 写 OPS 80K <br/>(内存充足)</td>
 </tr>
 
 <tr>
   <td>15~30 minutes</td>
-  <td> Read OPS down to around 10K<br/> Write OPS around 90K <br/>(Memory runs out)
+  <td> 读 OPS 下降到 10K<br/> 写 OPS 90K <br/>(内存用尽)
 </td>
-  <td>Read OPS fluctuates sharply between 500K~1M,<br/> Write OPS around 60K. <br/>
-      CPU usage close to 100%, IOWait close to 0. <br/>
-      (Memory is sufficient, but the compression thread in the background starts to compete with the read threads.)</td>
+  <td>读 OPS 在 500K~1M 间抖动,<br/> 写 OPS 60K. <br/>
+      CPU 利用率接近 100%, IOWait 接近 0. <br/>
+      (内存足够, 但是后台压缩线程和读线程开始竞争)</td>
 </tr>
 
 <tr>
 <td>30~60 minutes</td>
-<td>Read OPS declines all the time. <br/>Write OPS around 110K</td>
-<td>Read OPS fluctuates between 350K ~ 980K, with average 500K.CPU usage starts to go down. (Compaction thread hits the read performance)</td>
+<td>读 OPS 持续下降. <br/>写 OPS 110K</td>
+<td>读 OPS 在 350K ~ 980K 间抖动, 平均 500K. CPU 利用率开始下降. (压缩线程开始影响读线程)</td>
 </tr>
 
 <tr>
 <td>60~120 minutes</td>
-<td>Read OPS declines all the time.</td>
-<td>Read OPS fluctuates sharply, with average 450K.
-Write OPS keeps at around 55K.</td>
+<td>读 OPS 持续下降.</td>
+<td>读 OPS 剧烈波动, 平均 450K.
+写 OPS 55K.</td>
 </tr>
 
 <tr>
 <td>170 minutes</td>
-<td>550G data all written, with average write OPS 88K. SSD usage starts to decline.</td>
+<td>550G 数据全部写入, 平均写入 OPS 88K. SSD 利用率开始下降.</td>
 <td>&nbsp;</td>
 </tr>
 
 <tr>
 <td>173 minutes</td>
-<td>Read OPS declines to lower than 10K</td>
+<td>读 OPS 降到 10K 以下</td>
 <td>&nbsp;</td>
 </tr>
 
 <tr>
 <td>3 hours 30 minutes</td>
 <td>&nbsp;</td>
-<td>550G data finishes writing (The compression thread in the background impacts read performance greatly.)</td>
+<td>550G 全部写完 (后台压缩线程明显影响读线程.)</td>
 </tr>
 
 <tr>
 <td>3.5~11 hours</td>
-<td>Read OPS declines to lower than 5000</td>
-<td>Read OPS keeps at around 50K (Data being compressed gradually, more data can be loaded into memory)</td>
+<td>读 OPS 下降到 5000 以下</td>
+<td>读 OPS 保持在 50K 左右 (数据逐渐被压缩，更多数据被装入内存)</td>
 </tr>
 
 <tr>
 <td>8 hours 40 minutes</td>
-<td>Full Compaction finishes, data size about 213GB</td>
-<td>Read OPS increases to around 60K</td>
+<td>完整压缩完成, 数据尺寸 213GB</td>
+<td>读 OPS 上升到 60K</td>
 </tr>
 
 <tr>
 <td>11 hours</td>
-<td>Read OPS keeps at around 3K (Data doesn’t fully fit in memory)</td>
-<td>Read OPS grows and keeps at around 180K</td>
+<td>读 OPS 保持在 3K (数据无法完全装入内存)</td>
+<td>读 OPS 上涨到 180K</td>
 </tr>
 
 <tr>
 <td>>30 hours</td>
 <td>&nbsp;</td>
-<td>Data compression completes, Read OPS keeps at 1.85M (Compaction completes, data size is 47GB after compression, can be fully loaded into memory)</td>
+<td>Data 压缩完成, 读 OPS 稳定在 1.85M (压缩完成后数据是 47GB, 可以全部装入内存)</td>
 </tr>
 
 </table>
