@@ -2,13 +2,6 @@
 
 ## 1. 测试数据集
 
-We use the lineitem table in TPC-H dataset, and set the length of comment text field in the dbgen lineitem to 512 (from 27). So the average row length of the lineitem table is 615 bytes, in which, the key is the combination of the first 3 fields printed into decimal string from integers.
-
-The total size of the dataset is `554,539,419,806 bytes`, with `897,617,396 lines`. The total size of the keys is `22,726,405,004 bytes`, the other part is values.
-
-TPC-H dbgen generates raw data of strings, which we use directly in our test, without any transformation on the data.
-
-
 我们在 TPC-H 数据集中使用 lineitem 表，并将 dbgen lineitem 中的 comment 文本字段的长度设置为 512（默认是 27 字节）。 因此，lineitem 表的平均行尺寸为 615 字节，其中，key 是前三个整数字段直接拼接而成的字符串。
 
 数据集的总大小为 `554,539,419,806 bytes`，`897,617,396 rows`。 key 的总尺寸是 `22,726,405,004 bytes`, 剩余的是 value 总尺寸。
