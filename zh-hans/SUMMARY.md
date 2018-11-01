@@ -13,7 +13,7 @@
     * [Amazon Movie Reviews 测试](Benchmark-Amazon-Movies.md)
 - 技术背景
     * [索引压缩和数据压缩](TerarkDB技术内幕.md)
-    * [UintIndex](UnitIndex.md)
+    * [UintIndex](UintIndex.md)
     * [CompositeUintIndex](CompositeUintIndex.md)
 - 文章列表
     * [一个 GCC BUG](我们又发现了一个-GCC-bug.md)
