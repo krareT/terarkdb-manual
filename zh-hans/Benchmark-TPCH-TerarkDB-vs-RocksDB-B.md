@@ -1,16 +1,16 @@
-# TerarkDB vs. RocksDB on Server B
+# TerarkDB vs. RocksDB 服务器二
 
-## 1. Test Dataset
+## 1. 测试数据集
 
-We use the lineitem table in TPC-H dataset, and set the length of comment text field in the dbgen lineitem to 512 (from 27). So the average row length of the lineitem table is 615 bytes, in which, the key is the combination of the first 3 fields printed into decimal string from integers.
+我们在 TPC-H 数据集中使用 lineitem 表，并将 dbgen lineitem 中的 comment 文本字段的长度设置为 512（默认是 27 字节）。 因此，lineitem 表的平均行尺寸为 615 字节，其中，key 是前三个整数字段直接拼接而成的字符串。
 
-The total size of the dataset is `554,539,419,806 bytes`, with `897,617,396 lines`. The total size of the keys is `22,726,405,004 bytes`, the other part is values.
+数据集的总大小为 554,539,419,806 bytes，897,617,396 rows。 key 的总尺寸是 22,726,405,004 bytes, 剩余的是 value 总尺寸。
 
-TPC-H dbgen generates raw data of strings, which we use directly in our test, without any transformation on the data.
+TPC-H dbgen 生成最原始的字符串数据，我们直接在测试中使用这些数据而不对数据进行任何转换。
 
 
-## 2. Hardware
-|                                                                    | Server B                                         |
+## 2. 硬件
+|                                                                    | 服务器配置                                         |
 |--------------------------------------------------------------------|--------------------------------------------------|
 | CPU Number                                                         | 2                                                |
 | CPU Type                                                           | Xeon E5-2630 v3                                  |
@@ -23,9 +23,9 @@ TPC-H dbgen generates raw data of strings, which we use directly in our test, wi
 | Memory                                                             | 64GB                                             |
 | Memory Freq.                                                       | DDR4 1866Hz                                      |
 | SSD Capacity                                                       | 480GB x 4                                        |
-| SSD IOPS                                                           | Two Intel 730 IOPS 89000 <br/>Two Intel 530 IOPS 41000 |
+| SSD IOPS                                                           | 两个 Intel 730 IOPS 89000 <br/>两个 Intel 530 IOPS 41000 |
 
-## 3. DB Parameters
+## 3. DB 参数
 
 |                                      | RocksDB                                                                                                                                                                                                                  | TerarkDB                              |
 |--------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
@@ -43,7 +43,7 @@ TPC-H dbgen generates raw data of strings, which we use directly in our test, wi
 | Target_file_size_base                | Default (64M)                                                                                                                                                                                                            | 1G                                    |
 | Target_file_size_multiplier          | 1 (SST size in RocksDB<br/> do not influence performance)                                                                                                                                                                     | 5                                     |
 
-For both of them, we disable all write speed limits:
+对于两个引擎，均禁用写入限速:
 
 - options.level0_slowdown_writes_trigger = 1000;
 - options.level0_stop_writes_trigger = 1000;
@@ -51,7 +51,7 @@ For both of them, we disable all write speed limits:
 - options.hard_pending_compaction_bytes_limit = 4ull<<40
 
 
-## 4. Benchmark Charts
+## 4. 测试结果
 ### 4.1. OPS Comparison
 #### 4.1.1. TerarkDB OPS
 ![](images/terarkdb_vs_rocksdb_server_b/terarkdb_ops.png)
@@ -78,7 +78,7 @@ For both of them, we disable all write speed limits:
 
 
 
-## 5. Benchmark Detail Explanation
+## 5. 测试结果说明
 
 <table>
 <tr>
