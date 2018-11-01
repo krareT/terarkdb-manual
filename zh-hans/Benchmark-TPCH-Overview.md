@@ -1,11 +1,11 @@
 ## 该基准测试基于 TPC-H 数据
-We've changed `TPC-H`'s `dbgen` a little to generate the data we need, mostly changed its field length.
+我们对 TPC-H 的 dbgen 程序进行了轻微的修改以生成我们需要的数据，主要的修改是改变它的字段长度。
 
-我们对 `TPC-H` 的 `dbgen` 进行了轻微的修改以生成我们需要的数据，主要的修改是改变它的字段长度。
+在 TPC-H 的各种表中, lineitem 表的尺寸最大, 因此我们使用 lineitem 来进行测试. 
 
-在 `TPC-H` 的各种表中, `lineitem` 表的尺寸最大, 因此我们使用 `lineitem` 来进行测试. **Notice**: TPC-H dbgen 使用 `|` 作为分隔符.
+**Notice**: TPC-H dbgen 使用 `|` 作为分隔符.
 
-TPC-H lineitem 有一个 `comment` 字段, 这个字段是原始的纯文本数据并且是压缩算法的主要压缩对象。这个字段在原始的 `dbgen` 中被硬编码为 27 bytes，为了让它能够更加适应我们的实际需要，我们添加了一个用来修改这个字段长度的环境变量。另外我们创建了一个 `dbgen.sh` 来直接生成表数据：[dbgen.sh intro](https://github.com/rockeet/tpch-dbgen)
+TPC-H lineitem 有一个 comment 字段, 这个字段是原始的纯文本数据并且是压缩算法的主要压缩对象。这个字段在原始的 dbgen 中被硬编码为 27 bytes，为了让它能够更加适应我们的实际需要，我们添加了一个用来修改这个字段长度的环境变量。另外我们创建了一个 `dbgen.sh` 来直接生成表数据：[dbgen.sh intro](https://github.com/rockeet/tpch-dbgen)
 
 
 ## 环境
