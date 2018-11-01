@@ -1,18 +1,20 @@
-## This benchmark is based on TPCH data
+## 该基准测试基于 TPC-H 数据
 We've changed `TPC-H`'s `dbgen` a little to generate the data we need, mostly changed its field length.
 
-In the tables of `TPC-H`, `lineitem` has the largest table size, so we use `lineitem` for testing. **Notice**: TPC-H dbgen uses `|` as record separator.
+我们对 `TPC-H` 的 `dbgen` 进行了轻微的修改以生成我们需要的数据，主要的修改是改变它的字段长度。
 
-TPC-H lineitem has a `comment` field, which is raw text format. This field conttribute the most to the compression. The field in `dbgen` is hard coded as 27 bytes. To make it flexiable and fit our needs, we added a feature that let us change the field length via environemnt variable. And besides that we added a new `dbgen.sh` to generate compressed db tables directly. [dbgen.sh intro](https://github.com/rockeet/tpch-dbgen)
+在 `TPC-H` 的各种表中, `lineitem` 表的尺寸最大, 因此我们使用 `lineitem` 来进行测试. **Notice**: TPC-H dbgen 使用 `|` 作为分隔符.
+
+TPC-H lineitem 有一个 `comment` 字段, 这个字段是原始的纯文本数据并且是压缩算法的主要压缩对象。这个字段在原始的 `dbgen` 中被硬编码为 27 bytes，为了让它能够更加适应我们的实际需要，我们添加了一个用来修改这个字段长度的环境变量。另外我们创建了一个 `dbgen.sh` 来直接生成表数据：[dbgen.sh intro](https://github.com/rockeet/tpch-dbgen)
 
 
-## Platform
+## 环境
 - CPU : Intel(R) Xeon(R) CPU E5-2682 v4 @ 2.50GHz 40 core
 - Memory : 224GB
 - DISK : 2TB SSD
 
-## Compression
-| Original Data Size | Record Size | TerarkDB Compressed Size | RocksDB Compressed Size |
+## 压缩率
+| 原始数据 | Record Size | TerarkDB 压缩 | RocksDB 压缩 |
 |--------------------|-------------|--------------------------|-------------------------|
 | 40 GB              | 128 bytes   | 8.1 GB                   | 19 GB                   |
 | 104 GB             | 512 bytes   | 12 GB                    | 40 GB                   |
@@ -23,17 +25,17 @@ TPC-H lineitem has a `comment` field, which is raw text format. This field contt
 
 ## OPS
 - Read Only
-  - About 2,000,000/seconds
+  - 约 2,000,000/seconds
 - Read Write Mixed
-  - Reading keeps a pretty high performance, from 600,000/s to 1,200,000/s.
-  - Writing keeps around 100,000/seconds
+  - 读测试性能非常高, 从 600,000/s 到 1,200,000/s.
+  - 写速度约 100,000/seconds
 
 ![](images/random_read.png)
 
 
 ## Random Read Latency
 
-| Read Latency | Read Write Mixed | Read<br/>(No Background Compression) | Read<br/>(With Background Compression) |
+| Read Latency | Read Write Mixed | Read<br/>(无后台压缩) | Read<br/>(有后台压缩) |
 |---------|------------------|---------------------------------|-----------------------------------|
 | < 100ms | 100%             | 99.99%                          | 100%                              |
 | < 15ms  | 99.99%           | 99.99%                          | 100%                              |
