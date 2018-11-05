@@ -89,62 +89,62 @@ TPC-H dbgen 生成最原始的字符串数据，我们直接在测试中使用�
 
 <tr>
 <td>0~2 minutes</td>
-<td>Read OPS 970K <br/> Write OPS 100K (Apply Level Compaction)</td>
-<td>Read OPS 1.92M <br/> Write OPS 120K (Sufficient memory)</td>
+<td>Read OPS 970K <br/> Write OPS 100K (Level Compaction)</td>
+<td>Read OPS 1.92M <br/> Write OPS 120K (内存充足)</td>
 </tr>
 
 <tr>
 <td>2~15 minutes</td>
 <td>Read OPS 620K <br/> Write OPS 96K</td>
-<td>Read OPS 850K <br/> Write OPS 100K (Sufficient memory)</td>
+<td>Read OPS 850K <br/> Write OPS 100K (内存充足)</td>
 </tr>
 
 <tr>
 <td>15~30 minutes</td>
-<td>Read OPS 480K <br/>Write OPS 83K <br/>(Read and Write decline gradually)</td>
-<td>Read begins to fluctuate sharply, with average around 680K. <br/>Write keeps at around 88K, CPU usage close to 100%, IOWait close to 0 (Sufficient memory but compression thread in the background starts to hit the read threads)</td>
+<td>Read OPS 480K <br/>Write OPS 83K <br/>(读写性能逐渐下降)</td>
+<td>读性能显著下降到 680K 左右. <br/>写性能 88K, CPU 利用率接近 100%, IOWait 接近 0 (内存充足，但是压缩线程开始影响读性能)</td>
 </tr>
 
 <tr>
 <td>30~60 minutes</td>
 <td>Read OPS 220K <br/>Write OPS 61K</td>
-<td>Read OPS fluctuates with average 330K, Write OPS keeps at 82K, CPU usage starts to drop (Compaction thread hits the read performance)</td>
+<td>Read OPS 在 330K 附近波动, 写 OPS 82K, CPU 利用率开始下降 (压缩线程影响读性能)</td>
 </tr>
 
 <tr>
 <td>60~120 minutes</td>
-<td>Read 17K <br/> Write 39K <br/> (Memory runs out, read and write meet bottleneck)</td>
-<td>Read OPS fluctuates with average around 310K. <br/>Write OPS keeps at around 90K.</td>
+<td>Read 17K <br/> Write 39K <br/> (内存用尽, 读写性能遇到瓶颈)</td>
+<td>Read OPS 在 310K 附近波动. <br/>Write OPS 90K 左右.</td>
 </tr>
 
 <tr>
 <td>3 hours 20 minutes</td>
-<td>Read and Write keep dropping</td>
-<td>All 550G data completes writing, Read OPS fluctuates between 60 ~ 120K (Compaction thread hits the read performance)</td>
+<td>读写性能持续下降</td>
+<td>550G 数据完成写入, Read OPS 在 60 ~ 120K 间波动(压缩线程影响读性能)</td>
 </tr>
 
 <tr>
 <td>3~11 hours</td>
-<td>Read and Write keep dropping</td>
-<td>Read OPS keeps at around 170K <br/>(Data being compressed gradually, more data can be loaded into memory)</td>
+<td>读写性能持续下降</td>
+<td>Read OPS 170K 左右 <br/>(数据逐渐被压缩, 内存可以装入更多的数据)</td>
 </tr>
 
 <tr>
 <td>12 hours 40 minutes</td>
-<td>Data completes writing, current database size is 234GB <br/>(Continues to compress in the background)</td>
-<td>Read OPS keeps growing</td>
+<td>数据完成写入, 数据库总尺寸 234GB <br/>(后台持续压缩)</td>
+<td>Read OPS 持续增长</td>
 </tr>
 
 <tr>
 <td>18 hours</td>
-<td>Compaction completes with final data size 209GB after compression, Read OPS keeps at around 5K</td>
+<td>数据完全压缩到 209GB, Read OPS 5K 左右</td>
 <td>&nbsp;</td>
 </tr>
 
 <tr>
 <td>30 hours</td>
 <td>&nbsp;</td>
-<td>Data compression completes, Read OPS keeps at 2.2M <br/>(47G after compression, all data can be loaded into memory.)</td>
+<td>数据压缩完成, Read OPS 在 2.2M 左右 <br/>(完整压缩后 47G, 数据可以完全装入内存)</td>
 </tr>
 
 </table>
